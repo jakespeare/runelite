@@ -202,10 +202,10 @@ public class ItemStatOverlay extends Overlay
 			}
 		}
 
-		final ItemStats subtracted = s.subtract(other);
-		final ItemEquipmentStats e = subtracted.getEquipment();
+		final ItemStats substracted = s.substract(other);
+		final ItemEquipmentStats e = substracted.getEquipment();
 
-		if (subtracted.isEquipable() && e != null)
+		if (substracted.isEquipable() && e != null)
 		{
 			b.append(getChangeString("Prayer", e.getPrayer(), false, false));
 			b.append(getChangeString("Speed", e.getAspeed(), false, false));
