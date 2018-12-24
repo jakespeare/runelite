@@ -28,6 +28,7 @@ package net.runelite.client.plugins.xptracker;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BoxLayout;
@@ -62,6 +63,8 @@ class XpPanel extends PluginPanel
 
 	/* This displays the "No exp gained" text */
 	private final PluginErrorPanel errorPanel = new PluginErrorPanel();
+
+	private final int PAUSE_ALL_POSITION = 3;
 
 	XpPanel(XpTrackerPlugin xpTrackerPlugin, Client client, SkillIconManager iconManager)
 	{
@@ -154,7 +157,13 @@ class XpPanel extends PluginPanel
 		errorPanel.setContent("Exp trackers", "You have not gained experience yet.");
 		add(errorPanel);
 	}
+	void fixXpPanel() {
+		List<Skill> visibleSkills = getVisibleSkills();
+		for (Skill skill : visibleSkills) {
 
+		}
+		((JMenuItem)overallPanel.getComponentPopupMenu().getComponent(PAUSE_ALL_POSITION)).setText("Unpaused");
+	}
 	static String buildXpTrackerUrl(final Actor player, final Skill skill)
 	{
 		if (player == null)
@@ -209,6 +218,18 @@ class XpPanel extends PluginPanel
 		}
 
 		SwingUtilities.invokeLater(() -> rebuildAsync(xpSnapshotTotal));
+	}
+
+	List<Skill> getVisibleSkills() {
+		List<Skill> visibleSkills = new ArrayList<>();
+		for (Skill skill : Skill.values())
+		{
+			if (infoBoxes.get(skill) != null && infoBoxes.get(skill).isVisible())
+			{
+					visibleSkills.add(skill);
+			}
+		}
+		return visibleSkills;
 	}
 
 	private void rebuildAsync(XpSnapshotTotal xpSnapshotTotal)

@@ -429,7 +429,6 @@ public class XpTrackerPlugin extends Plugin
 		{
 			xpPauseState.tickXp(skill, client.getSkillExperience(skill), xpTrackerConfig.pauseSkillAfter());
 		}
-
 		xpPauseState.tickLogout(xpTrackerConfig.pauseOnLogout(), !GameState.LOGIN_SCREEN.equals(client.getGameState()));
 
 		if (lastTickMillis == 0)
@@ -475,7 +474,7 @@ public class XpTrackerPlugin extends Plugin
 
 	void pauseAllSkills(boolean pause)
 	{
-		for (Skill skill : Skill.values())
+		for (Skill skill : xpPanel.getVisibleSkills())
 		{
 			pauseSkill(skill, pause);
 		}
